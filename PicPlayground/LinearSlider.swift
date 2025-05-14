@@ -64,7 +64,6 @@ struct LinearSlider: View {
             .frame(width: 10, height: 35)
     }
     
-    
     private func resetScrollStopTimer() {
         isScrolling = true
         scrollStopTimer?.invalidate()
@@ -75,8 +74,6 @@ struct LinearSlider: View {
         }
     }
 }
-
-
 
 #Preview {
     LinearSlider(currentIndex: .constant(.zero))

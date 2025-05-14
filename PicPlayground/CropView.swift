@@ -17,7 +17,7 @@ struct CropView: View {
                 .resizable()
                 .scaledToFit()
             
-            
+            EditingSlidersView()
         }
         
             

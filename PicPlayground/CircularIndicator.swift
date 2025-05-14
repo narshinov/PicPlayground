@@ -34,39 +34,40 @@ enum RotationIndicatorType: CaseIterable, IndicatorTypeImpl {
 }
 
 struct CircularIndicator<T: IndicatorTypeImpl>: View {
-    let type: T
-    let value: CGFloat
-    @Binding var isSelected: Bool
+    let model: Model
             
     var body: some View {
         content
-            .degreeIndicator(value)
-            .onTapGesture {
-                isSelected = true
-            }
+            .degreeIndicator(model.value)
     }
     
     @ViewBuilder
     private var content: some View {
-        if isSelected {
-            Text(displayValue)
-        } else {
-            type.image
+        if model.isEdited {
+            model.type.image
                 .resizable()
                 .scaledToFit()
                 .frame(width: 32, height: 32)
                 .foregroundStyle(.black)
+        } else {
+            Text(displayValue)
         }
     }
     
     private var displayValue: String {
-        Int((type.maxValue * value).rounded()).formatted(.number)
+        Int((model.type.maxValue * model.value).rounded()).formatted(.number)
+    }
+    
+    struct Model {
+        let type: T
+        var value: CGFloat
+        var isEdited: Bool = true
     }
 }
 
 #Preview {
     let type = RotationIndicatorType.rotation
-    CircularIndicator(type: type, value: 0.55, isSelected: .constant(true))
+    CircularIndicator(model: .init(type: type, value: 0.5))
 }
 
 struct DegreeIndicator: ViewModifier {
@@ -88,7 +89,6 @@ struct DegreeIndicator: ViewModifier {
         }
         .foregroundStyle(color)
         .frame(width: 64, height: 64)
-        .padding()
     }
     
     private var trimDirection: CGFloat {
