@@ -11,7 +11,7 @@ import SwiftUI
 struct PicPlaygroundApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CropView()
         }
     }
 }

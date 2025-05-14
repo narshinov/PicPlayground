@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-//        Image(systemName: "circle.and.line.horizontal.fill")
-//        Image(systemName: "trapezoid.and.line.vertical.fill")
-//        Image(systemName: "trapezoid.and.line.horizontal.fill")
-
 protocol IndicatorTypeImpl {
     var image: Image { get }
     var maxValue: CGFloat { get }
@@ -40,11 +36,14 @@ enum RotationIndicatorType: CaseIterable, IndicatorTypeImpl {
 struct CircularIndicator<T: IndicatorTypeImpl>: View {
     let type: T
     let value: CGFloat
-    var isSelected: Bool
+    @Binding var isSelected: Bool
             
     var body: some View {
         content
             .degreeIndicator(value)
+            .onTapGesture {
+                isSelected = true
+            }
     }
     
     @ViewBuilder
@@ -67,7 +66,7 @@ struct CircularIndicator<T: IndicatorTypeImpl>: View {
 
 #Preview {
     let type = RotationIndicatorType.rotation
-    return CircularIndicator(type: type, value: 0.55, isSelected: true)
+    CircularIndicator(type: type, value: 0.55, isSelected: .constant(true))
 }
 
 struct DegreeIndicator: ViewModifier {
@@ -89,6 +88,7 @@ struct DegreeIndicator: ViewModifier {
         }
         .foregroundStyle(color)
         .frame(width: 64, height: 64)
+        .padding()
     }
     
     private var trimDirection: CGFloat {

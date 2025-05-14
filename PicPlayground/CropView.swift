@@ -17,11 +17,7 @@ struct CropView: View {
                 .resizable()
                 .scaledToFit()
             
-            HStack(spacing: 16) {
-                ForEach(items, id: \.self) { type in
-                    CircularIndicator(type: type, value: CGFloat.random(in: -1...1), isSelected: false)
-                }
-            }
+            
         }
         
             
